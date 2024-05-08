@@ -9,6 +9,7 @@ public class Piece : MonoBehaviour
     public Vector3 initialPosition;
     public bool isInRightPosition;
     public bool isSelected;
+    public bool isReturning;
 
     void Start()
     {
@@ -21,7 +22,7 @@ public class Piece : MonoBehaviour
     {
         if (Vector3.Distance(transform.position, rightPosition) < 0.5f)
         {
-            if (!isSelected && !isInRightPosition)
+            if (!isSelected && !isInRightPosition && !isReturning)
             {
                 transform.position = rightPosition;
                 isInRightPosition = true;
@@ -34,7 +35,7 @@ public class Piece : MonoBehaviour
 
     public void ReturnToInitialPosition()
     {
-        transform.position = initialPosition;
+        StartCoroutine(Return());
     }
     
     public void Reset()
@@ -42,5 +43,24 @@ public class Piece : MonoBehaviour
         transform.position = new Vector3(Random.Range(-7.0f, -2.0f), Random.Range(-3.0f, 3.0f), 0);
         initialPosition = transform.position;
         isInRightPosition = false;
+    }
+
+    public IEnumerator Return()
+    {
+        isReturning = true;
+        float elapsedTime = 0;
+        float duration = 0.5f;
+        Vector3 start = transform.position;
+        Vector3 end = initialPosition;
+
+        while (elapsedTime < duration)
+        {
+            transform.position = Vector3.Lerp(start, end, (elapsedTime / duration));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        
+        transform.position = end;
+        isReturning = false;
     }
 }
