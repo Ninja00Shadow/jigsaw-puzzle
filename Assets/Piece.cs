@@ -13,9 +13,8 @@ public class Piece : MonoBehaviour
     void Start()
     {
         rightPosition = transform.position;
-        transform.position = new Vector3(Random.Range(-7.0f, -2.0f), Random.Range(-3.0f, 3.0f), 0);
-        initialPosition = transform.position;
-        isInRightPosition = false;
+        
+        Reset();
     }
 
     void Update()
@@ -36,5 +35,12 @@ public class Piece : MonoBehaviour
     public void ReturnToInitialPosition()
     {
         transform.position = initialPosition;
+    }
+    
+    public void Reset()
+    {
+        transform.position = new Vector3(Random.Range(-7.0f, -2.0f), Random.Range(-3.0f, 3.0f), 0);
+        initialPosition = transform.position;
+        isInRightPosition = false;
     }
 }
