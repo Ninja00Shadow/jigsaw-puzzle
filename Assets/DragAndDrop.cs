@@ -35,12 +35,32 @@ public class NewBehaviourScript : MonoBehaviour
         if (selectedPiece && Input.GetMouseButtonUp(0))
         {
             selectedPiece.GetComponent<Piece>().isSelected = false;
+
+            ChechIfWrongPosition();
+            
             selectedPiece = null;
         }
 
         if (selectedPiece != null)
         {
             selectedPiece.transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+        }
+    }
+    
+    private void ChechIfWrongPosition()
+    {
+        if (selectedPiece && Vector3.Distance(selectedPiece.transform.position, selectedPiece.GetComponent<Piece>().rightPosition) > 0.5f)
+        {
+            GameManager.Instance.PieceNotInRightPosition();
+            ReturnPieceToInitialPosition();
+        }
+    }
+    
+    private void ReturnPieceToInitialPosition()
+    {
+        if (selectedPiece)
+        {
+            selectedPiece.GetComponent<Piece>().ReturnToInitialPosition();
         }
     }
 }
