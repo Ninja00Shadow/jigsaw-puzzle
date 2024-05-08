@@ -40,7 +40,7 @@ public class Piece : MonoBehaviour
     
     public void Reset()
     {
-        transform.position = new Vector3(Random.Range(-7.0f, -2.0f), Random.Range(-3.0f, 3.0f), 0);
+        transform.position = new Vector3(Random.Range(2f, 7f), Random.Range(-3.0f, 3.0f), 0);
         initialPosition = transform.position;
         isInRightPosition = false;
     }
